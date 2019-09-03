@@ -29,20 +29,20 @@ cd salrs/test_scheme && make
 # Details of Test
 
 `test_salrs` tests:
-* average, median, maximum and minimum runtime of 1000 times of `setup()`;
-* average, median, maximum and minimum runtime of 1000 times of `master_key_gen()`, which is used to generate (MPK, MSK) pairs;
-* average, median, maximum and minimum runtime of 1000 times of `derived_public_key_gen()`,`derived_public_key_owner_check()` and `derived_public_key_public_check()`, unless some checks fail and failures are reported.
-* average, median, maximum and minimum runtime of 1000 times of `sign_salrs()` and `verify_salrs()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
-* average, maximum and minimum times of rejection in `sign_salrs()` tested above.
+* average, median, maximum and minimum runtime of 1000 times of `Setup()`.
+* average, median, maximum and minimum runtime of 1000 times of `MasterKeyGen()`, which is used to generate (MPK, MSK) pairs.
+* average, median, maximum and minimum runtime of 1000 times of `DerivedPublicKeyGen()`,`DerivedPublicKeyOwnerCheck()` and `DerivedPublicKeyPublicCheck()`, unless some checks fail and failures are reported.
+* average, median, maximum and minimum runtime of 1000 times of `Sign()` and `Verify()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
+* average, maximum and minimum times of rejection in `Sign()` tested above.
 * test_salrs is used to test salrs_main.c.
 * NOTE: The max available ring size is 40 in our system restricted to the resources we have allocated. The max ring size may change based on the resources allocated.
 
 `test_salrs_scheme` tests:
-* average, median, maximum and minimum runtime of 1000 times of `setup()`;
-* average, median, maximum and minimum runtime of 1000 times of `master_key_gen()`, which is used to generate (MPK, MSK) pairs;
-* average, median, maximum and minimum runtime of 1000 times of `derived_public_key_gen()`,`derived_public_key_owner_check()` and `derived_public_key_public_check()`, unless some checks fail and failures are reported.
-* average, median, maximum and minimum runtime of 1000 times of `sign_salrs()` and `verify_salrs()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
-* average, maximum and minimum times of rejection in `sign_salrs()` tested above.
+* average, median, maximum and minimum runtime of 1000 times of `setup_scheme()`.
+* average, median, maximum and minimum runtime of 1000 times of `master_key_gen_scheme()`, which is used to generate (MPK, MSK) pairs.
+* average, median, maximum and minimum runtime of 1000 times of `derived_public_key_gen_scheme()`,`derived_public_key_owner_check_scheme()` and `derived_public_key_public_check_scheme()`, unless some checks fail and failures are reported.
+* average, median, maximum and minimum runtime of 1000 times of `sign_salrs_scheme()` and `verify_salrs_scheme()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
+* average, maximum and minimum times of rejection in `sign_salrs_scheme()` tested above.
 * test_salrs_scheme is used to test salrs_main_scheme.c.
 * NOTE: The max available ring size is 40 in our system restricted to the resources we have allocated. The max ring size may change based on the resources allocated.
 
