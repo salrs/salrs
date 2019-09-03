@@ -35,6 +35,7 @@ cd salrs/test_scheme && make
 * average, median, maximum and minimum runtime of 1000 times of `sign_salrs()` and `verify_salrs()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
 * average, maximum and minimum times of rejection in `sign_salrs()` tested above.
 * test_salrs is used to test salrs_main.c.
+* NOTE: The max available ring size is 40 in our system restricted to the resources we have allocated. The max ring size may change based on the resources allocated.
 
 `test_salrs_scheme` tests:
 * average, median, maximum and minimum runtime of 1000 times of `setup()`;
@@ -43,6 +44,7 @@ cd salrs/test_scheme && make
 * average, median, maximum and minimum runtime of 1000 times of `sign_salrs()` and `verify_salrs()` with ring size 1, 3, 5, 10, 20, unless some signing or verifying fail and failures are reported.
 * average, maximum and minimum times of rejection in `sign_salrs()` tested above.
 * test_salrs_scheme is used to test salrs_main_scheme.c.
+* NOTE: The max available ring size is 40 in our system restricted to the resources we have allocated. The max ring size may change based on the resources allocated.
 
 # Introduction of Source Files
 
