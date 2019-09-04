@@ -4,13 +4,13 @@
 #include "speed.h"
 #include "../src/randombytes.h"
 #include "../src/params_salrs.h"
-#include "../src/salrs_main.h"
+#include "../src/salrs_main_scheme.h"
 #include "../src/kyber_all.h"
 #include "../src/polyvec_salrs.h"
 
 #define MLEN 59
 #define NTESTS 1000
-#define RSIZE_MAX 35
+#define RSIZE_MAX 40
 #define SIG_SIZE RSIZE_MAX*4000
 #define round 1000
 
@@ -31,12 +31,9 @@ int main(void)
   unsigned long long crej[NTESTS * RSIZE_MAX], tsetup[round], tmasterkeygen[round], tderivedkeygen[round], townercheck[round], tpubliccheck[round], tsign[NTESTS * RSIZE_MAX], tverify[NTESTS * RSIZE_MAX];
   //unsigned long long tkeygen[NTESTS * RSIZE_MAX];
   unsigned char mpk[RSIZE_MAX][SIZE_MPK];
-  unsigned char msvk[RSIZE_MAX][SIZE_SKKEM];
-  unsigned char mssk[RSIZE_MAX][PACK_S_SIZE];
+  unsigned char msk[RSIZE_MAX][SIZE_MSK];
   unsigned char ring[RSIZE_MAX][SIZE_DPK];
   unsigned char sig[RSIZE_MAX][SIG_SIZE];
-  unsigned char seed[SIZE_PKKEM + SIZE_SKKEM + PACK_S_SIZE];
-  unsigned char key_image[PACK_I_SIZE];
   //unsigned char sm[SIG_SIZE];
   //polyvecl z[RSIZE_MAX + 5];
   //polyvecl z2[RSIZE_MAX + 5];
@@ -53,7 +50,7 @@ int main(void)
   for (ii = 0; ii < round; ++ii)
 {  
         tsetup[ii] = cpucycles_start();
-        Setup();
+        setup_scheme();
         tsetup[ii] = cpucycles_stop() - tsetup[ii] - timing_overhead;
         time = (double)(tsetup[ii])/2600000;
         if (time > t_setup_max){t_setup_max = time;}
@@ -70,9 +67,8 @@ int main(void)
         
         tmasterkeygen[c_masterkeygen] = cpucycles_start();
         //printf("\norder in test:%d\n",ii);
-        MasterSeedGen(seed);
-        MasterKeyGen(seed, mpk[0], msvk[0], mssk[0]);
-	//DerivedPublicKeyGen(mpk[0], ring[0]); 
+	master_key_gen_scheme(mpk[0], msk[0]);
+	derived_public_key_gen_scheme(mpk[0], ring[0]); 
         tmasterkeygen[c_masterkeygen] = cpucycles_stop() - tmasterkeygen[c_masterkeygen] - timing_overhead; 
         time = (double)(tmasterkeygen[c_masterkeygen])/2600000;
         if (time > t_masterkeygen_max){t_masterkeygen_max = time;}
@@ -86,10 +82,9 @@ int main(void)
 //derivedkeygen() && ownercheck() && publiccheck()
   for (i = 0; i < round; ++i)
   {
-                MasterSeedGen(seed);
-                MasterKeyGen(seed, mpk[0], msvk[0], mssk[0]);
+                master_key_gen_scheme(mpk[0], msk[0]);
                 tderivedkeygen[c_derivedkeygen] = cpucycles_start();
-		DerivedPublicKeyGen(mpk[0], ring[0]); 
+		derived_public_key_gen_scheme(mpk[0], ring[0]); 
                 tderivedkeygen[c_derivedkeygen] = cpucycles_stop() - tderivedkeygen[c_derivedkeygen] - timing_overhead;
                 time = (double)(tderivedkeygen[c_derivedkeygen])/2600000;
                 if (time > t_derivedkeygen_max){t_derivedkeygen_max = time;}
@@ -97,7 +92,7 @@ int main(void)
                 c_derivedkeygen++;
 
                 townercheck[c_ownercheck] = cpucycles_start();
-		ret = DerivedPublicKeyOwnerCheck(ring[0], mpk[0], msvk[0]);
+		ret = derived_public_key_owner_check_scheme(ring[0], msk[0], mpk[0]);
 		if (ret == 0) {
 			printf("\nDpk Owner Check Wrong\n\n");
 			return -1;
@@ -109,7 +104,7 @@ int main(void)
                 c_ownercheck++;
 
                 tpubliccheck[c_publiccheck] = cpucycles_start();
-		ret = DerivedPublicKeyPublicCheck(ring[0]);
+		ret = derived_public_key_public_check_scheme(ring[0]);
 		if (ret == 0) {
 			printf("\nDpk Public Check Wrong\n\n");
 			return -1;
@@ -160,9 +155,8 @@ for (k = 0; k < 5; ++k)
 	
 	for (ii = 0; ii < RSIZE[k]; ++ii)
 	{
-                MasterSeedGen(seed);
-                MasterKeyGen(seed, mpk[ii], msvk[ii], mssk[ii]);
-		DerivedPublicKeyGen(mpk[ii], ring[ii]); 
+		master_key_gen_scheme(mpk[ii], msk[ii]);
+		derived_public_key_gen_scheme(mpk[ii], ring[ii]); 
 	}
 
 
@@ -204,7 +198,7 @@ for (k = 0; k < 5; ++k)
 //           printf("Now we are in sign round %d\n", c_sign);
 //           printf("Sign_test_%d\n",ii);
            tsign[c_sign] = cpucycles_start();
-	   ret = Sign(m, MLEN, ring, RSIZE[k], ring[ii], mpk[ii], msvk[ii], mssk[ii], sig[ii], key_image);
+	   ret = sign_salrs_scheme(m, MLEN, ring, RSIZE[k], ring[ii], mpk[ii], msk[ii],sig[ii]);
            tsign[c_sign] = cpucycles_stop() - tsign[c_sign] - timing_overhead;
 //           printf("\nsign_end\n");
            if (ret == -1){printf("Sign failed\n");}
@@ -220,12 +214,12 @@ for (k = 0; k < 5; ++k)
 //#ifdef DBENCH
 //    tred = tadd = tmul = tround = tsample = tpack = tshake = &dummy;
 //#endif
-//        printf("\nSign check passed\n\n");
+        printf("\nSign check passed\n\n");
 	for (ii = 0; ii < RSIZE[k]; ++ii)
 	{
 //         printf("Verify_test_%d\n", ii);
           tverify[c_verify] = cpucycles_start();
-	   ret = Verify(m, MLEN, ring, RSIZE[k], sig[ii], key_image);
+	   ret = verify_salrs_scheme(m, MLEN, ring, RSIZE[k], sig[ii]);
        tverify[c_verify] = cpucycles_stop() - tverify[c_verify] - timing_overhead;
 
 
@@ -238,7 +232,7 @@ for (k = 0; k < 5; ++k)
             if (time < t_verify_min){t_verify_min = time;}
             c_verify++;
 	} 
-//     printf("\nVerify check passed\n\n");
+     printf("\nVerify check passed\n\n");
 
 /**    printf("Other_tests:\n\n");
     randombytes(m2, MLEN);
@@ -250,7 +244,7 @@ for (k = 0; k < 5; ++k)
     }
         printf("No trivial forgeries possible\n");
 **/
-        ret = Link(sig[0], m, MLEN, ring, RSIZE[k], sig[0], m, MLEN, ring, RSIZE[k]);
+        ret = link_salrs_scheme(sig[0], m, MLEN, ring, RSIZE[k], sig[0], m, MLEN, ring, RSIZE[k]);
 	if (ret == 0) {
 //		printf("no Double Spend\n");
 		return -1;

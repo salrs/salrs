@@ -12,16 +12,19 @@
 #include "params_kyber.h"
 #include "check_salrs.h"
 
-void setup();
-void master_key_gen(unsigned char *mpk, unsigned char *msk);
-void derived_public_key_gen(unsigned char* mpk, unsigned char* dpk);
-int derived_public_key_owner_check(unsigned char *dpk, unsigned char *msk, unsigned char *mpk);
-int derived_public_key_public_check(unsigned char *dpk);
-int sign_salrs(unsigned char *m, unsigned int len, unsigned char (*Ring)[SIZE_DPK],unsigned int r, unsigned char *dpk, unsigned char* mpk, unsigned char *msk, polyvecl *z, unsigned char *sig);
-int verify_salrs(unsigned char*m, unsigned int len,unsigned char (*Ring)[SIZE_DPK], unsigned int r, polyvecl *z, unsigned char* sig);
-int link_salrs(unsigned char *sig1, unsigned int r1,polyvecl *z1,
-	unsigned char *sig2, unsigned int r2, polyvecl *z2);
-
+void Setup();
+void MasterSeedGen(unsigned char *seed);
+void MasterKeyGen(unsigned char *seed, unsigned char *MPK, unsigned char *MSVK, unsigned char *MSSK);
+int MasterPublicKeyPublicCheck(unsigned char *MPK);
+void DerivedPublicKeyGen(unsigned char* MPK, unsigned char* DPK);
+int DerivedPublicKeyOwnerCheck(unsigned char *DPK, unsigned char *MPK, unsigned char *MSVK);
+int DerivedPublicKeyPublicCheck(unsigned char* DPK);
+int Sign(unsigned char *m, unsigned int mlen, unsigned char (*Ring)[SIZE_DPK],unsigned int r, unsigned char *DPK, unsigned char* MPK, unsigned char *MSVK, unsigned char *MSSK, unsigned char *sig, unsigned char *ID);
+int Verify(unsigned char *m, unsigned int mlen,unsigned char (*Ring)[SIZE_DPK], unsigned int r, unsigned char* sig, unsigned char *key_image);
+int Link(unsigned char *sig1, unsigned char *m1, unsigned int mlen1,
+unsigned char (*Ring1)[SIZE_DPK],unsigned int r1,
+	unsigned char *sig2, unsigned char *m2, unsigned int mlen2,
+unsigned char (*Ring2)[SIZE_DPK],unsigned int r2);
 
 #endif // SALRS_MAIN.H
 
