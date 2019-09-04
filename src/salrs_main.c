@@ -31,8 +31,7 @@ void Setup()
 /*************************************************
 * Name:        MasterSeedGen
 *
-* Description:   a probabilistic algorithm to generate a seed for MasterKeyGen()
-*             the seed is a string which contains pkkem, skkem and s
+* Description:   a probabilistic algorithm to generate a seed which is used for MasterKeyGen()
 * Arguments:   unsigned char *seed: the output seed
 *
 **************************************************/
@@ -590,7 +589,7 @@ int Sign(unsigned char *m, unsigned int mlen, unsigned char (*Ring)[SIZE_DPK],un
 *             - unsigned char (*Ring)[SIZE_DPK]: point to Ring = (dpk1, dpk2.....dpkr)
 *             - unsigned int r:r in R = (dpk1, dpk2.....dpkr)
 *             - unsigned char * sig: point to input signature
-*             - unsigned char *ID: point to output ID
+*             - unsigned char *key_image: point to output key_image
 *
 * Returns 1/0. 1 means it is a valid signature , 0 means it is an invalid signature
 **************************************************/

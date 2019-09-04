@@ -5,26 +5,28 @@
 #include "kyber_all.h"
 #include "polyvec_salrs.h"
 
-void pack_t(polyveck *t,
+void pack_polyveck_q(polyveck *t,
 	unsigned char *t_char);
-void unpack_t(unsigned char *t_char,
+void unpack_polyveck_q(unsigned char *t_char,
 	polyveck *t);
-void pack_s(polyvecl *s,
+void pack_polyvecl_eta(polyvecl *s,
 	unsigned char *s_char);
-void unpack_s(unsigned char *s_char,
+void unpack_polyvecl_eta(unsigned char *s_char,
 	polyvecl *s);
-void pack_z(polyvecl *z,
+void pack_polyvecl_gmte(polyvecl *z,
 	unsigned char *z_char);
-void unpack_z(unsigned char *z_char,
+void unpack_polyvecl_gmte(unsigned char *z_char,
 	polyvecl *z);
-void pack_m(polyvecm *m,
+void pack_polyvecm_q(polyvecm *m,
 	unsigned char *m_char);
-void unpack_m(unsigned char *m_char,
+void unpack_polyvecm_q(unsigned char *m_char,
 	polyvecm *m);
+/**
 void pack_i(polyvecm *i,
 	unsigned char *i_char);
 void unpack_i(unsigned char *i_char,
 	polyvecm *i);
+**/
 void pack_mpk(unsigned char *pkkem,
 	polyveck *t,
 	unsigned char *mpk);
@@ -44,13 +46,11 @@ void unpack_dpk(unsigned char *dpk,
 	unsigned char *c,
 	polyveck *t);
 void pack_sig(poly *c,
-	polyvecl * z,
 	unsigned int r,
 	polyvecm* i,
 	unsigned char *sig);
 int unpack_sig(unsigned char *sig,
 	poly *c,
-	polyvecl * z,
 	unsigned int r,
 	polyvecm* i);
 

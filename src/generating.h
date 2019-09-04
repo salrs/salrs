@@ -22,8 +22,8 @@ void poly_uniform_gmte(poly *a,
 void expand_matA(polyvecl matA[K]);
 void expand_V(unsigned char Kyber_k[KYBER_SYMBYTES], polyvecl *V);
 void generate_L_eta(polyvecl *s);
-void generate_gamma(polyvecl *s);
-void generate_gamma_sub_to_theta_eta(polyvecl *s);
+void generate_L_gamma(polyvecl *s);
+void generate_L_gamma_sub_to_theta_eta(polyvecl *s);
 void Hm(polyveck *t, polyvecl H[M]);
 void H_theta(unsigned char * m,
 	unsigned int mlen,

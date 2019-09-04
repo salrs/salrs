@@ -5,14 +5,14 @@
 //pack and unpack functions
 
 /*************************************************
-* Name:        pack_t
+* Name:        pack_polyveck_q
 *
 * Description: Bit-pack t = As.
 *
 * Arguments:    - polyveck *t: pointer to input vector t
 *              - unsigned char *t_char: pointer to output array
 **************************************************/
-void pack_t(polyveck *t,
+void pack_polyveck_q(polyveck *t,
 	unsigned char *t_char) 
 {
 	int i, j;
@@ -40,14 +40,14 @@ void pack_t(polyveck *t,
 
 
 /*************************************************
-* Name:        unpack_t
+* Name:        unpack_polyveck_q
 *
 * Description:  unpack t = As.
 *
 * Arguments:   - unsigned char *t_char: pointer to input array
 *              - polyveck *t: pointer to output vector t
 **************************************************/
-void unpack_t(unsigned char *t_char,
+void unpack_polyveck_q(unsigned char *t_char,
 	polyveck *t)
 {
 	int i, j;
@@ -76,14 +76,14 @@ void unpack_t(unsigned char *t_char,
 
 
 /*************************************************
-* Name:        pack_s
+* Name:        pack_polyvecl_eta
 *
 * Description: Bit-pack s <- Sl_eta.
 *
 * Arguments:    - polyvecl *s: pointer to input vector s
 *              - unsigned char *s_char: pointer to output array
 **************************************************/
-void pack_s(polyvecl *s,
+void pack_polyvecl_eta(polyvecl *s,
 	unsigned char *s_char) 
 {
 	int i, j;
@@ -110,14 +110,14 @@ void pack_s(polyvecl *s,
 
 
 /*************************************************
-* Name:        unpack_s
+* Name:        unpack_polyvecl_eta
 *
 * Description: unpack s <- Sl_eta.
 *
 * Arguments:   - unsigned char *s_char: pointer to input array
 *              - polyvecl *s: pointer to output vector s
 **************************************************/
-void unpack_s(unsigned char *s_char,
+void unpack_polyvecl_eta(unsigned char *s_char,
 	polyvecl *s)
 {
 	int i, j;
@@ -149,14 +149,14 @@ void unpack_s(unsigned char *s_char,
 
 
 /*************************************************
-* Name:        pack_z
+* Name:        pack_polyvecl_gmte
 *
 * Description:  Bit-pack z <- Sl_gamma_minus_two_theta_eta.
 *
 * Arguments:   - polyvecl *z: pointer to input vector z
 *             - unsigned char *z_char: pointer to output array
 **************************************************/
-void pack_z(polyvecl *z,
+void pack_polyvecl_gmte(polyvecl *z,
 	unsigned char *z_char) 
 {
 	int i, j;
@@ -187,14 +187,14 @@ void pack_z(polyvecl *z,
 
 
 /*************************************************
-* Name:        unpack_z
+* Name:        unpack_polyvecl_gmte
 *
 * Description:  Bit-pack z <- Sl_gamma_minus_two_theta_eta.
 *
 * Arguments:   - unsigned char *z_char: pointer to input array
 *              - polyvecl *z: pointer to output vector z
 **************************************************/
-void unpack_z(unsigned char *z_char,
+void unpack_polyvecl_gmte(unsigned char *z_char,
 	polyvecl *z)
 {
 	int i, j;
@@ -227,14 +227,14 @@ void unpack_z(unsigned char *z_char,
 
 
 /*************************************************
-* Name:        pack_m
+* Name:        pack_polyvecm_q
 *
 * Description:  Bit-pack m <- Rmq.
 *
 * Arguments:  - polyvecm *m: pointer to input vector m
 *            - unsigned char *m_char: pointer to output array
 **************************************************/
-void pack_m(polyvecm *m,
+void pack_polyvecm_q(polyvecm *m,
 	unsigned char *m_char) 
 {
 	int ii, j;
@@ -261,14 +261,14 @@ void pack_m(polyvecm *m,
 
 
 /*************************************************
-* Name:        unpack_m
+* Name:        unpack_polyvecm_q
 *
 * Description:  unpack m <- Rmq.
 *
 * Arguments:   - unsigned char *m_char: pointer to input array
 *              - polyvecm *m: pointer to output vector m
 **************************************************/
-void unpack_m(unsigned char *m_char,
+void unpack_polyvecm_q(unsigned char *m_char,
 	polyvecm *m) 
 {
 	int ii, j;
@@ -294,6 +294,7 @@ void unpack_m(unsigned char *m_char,
 	}
 }
 
+
 /*************************************************
 * Name:        pack_i
 *
@@ -302,6 +303,7 @@ void unpack_m(unsigned char *m_char,
 * Arguments:  - polyvecm *i: pointer to input vector i
 *            - unsigned char *i_char: pointer to output array
 **************************************************/
+/**
 void pack_i(polyvecm *i,
 	unsigned char *i_char) 
 {
@@ -325,6 +327,7 @@ void pack_i(polyvecm *i,
 		}
 	}
 }
+**/
 
 
 
@@ -336,6 +339,7 @@ void pack_i(polyvecm *i,
 * Arguments:   - unsigned char *i_char: pointer to input array
 *              - polyvecm *i: pointer to output vector i
 **************************************************/
+/**
 void unpack_i(unsigned char *i_char,
 	polyvecm *i) 
 {
@@ -361,7 +365,7 @@ void unpack_i(unsigned char *i_char,
 		}
 	}
 }
-
+**/
 
 
 /*************************************************
@@ -384,7 +388,7 @@ void pack_mpk(unsigned char *pkkem,
 		mpk[i] = pkkem[i];
 	mpk += SIZE_PKKEM;
 
-	pack_t(t, mpk);
+	pack_polyveck_q(t, mpk);
 }
 
 
@@ -408,7 +412,7 @@ void unpack_mpk(unsigned char *mpk,
 		pkkem[i] = mpk[i];
 	mpk += SIZE_PKKEM;
     
-	unpack_t(mpk, t);
+	unpack_polyveck_q(mpk, t);
 }
 
 
@@ -431,7 +435,7 @@ void pack_msk(unsigned char *skkem,
 		msk[i] = skkem[i];
 	msk += SIZE_SKKEM;
     
-	pack_s(s, msk);
+	pack_polyvecl_eta(s, msk);
 }
 
 
@@ -455,7 +459,7 @@ void unpack_msk(unsigned char *msk,
 		skkem[i] = msk[i];
 	msk += SIZE_SKKEM;
 
-	unpack_s(msk, s);
+	unpack_polyvecl_eta(msk, s);
 }
 
 
@@ -479,7 +483,7 @@ void pack_dpk(unsigned char *c,
 		dpk[i] = c[i];
 	dpk += SIZE_CIPHER;
         //printf("\npack t\n");
-	pack_t(t, dpk);
+	pack_polyveck_q(t, dpk);
 }
 
 
@@ -503,7 +507,7 @@ void unpack_dpk(unsigned char *dpk,
 		c[i] = dpk[i];
 	dpk += SIZE_CIPHER;
        // printf("\nunpack t\n");
-	unpack_t(dpk, t);
+	unpack_polyveck_q(dpk, t);
 }
 
 
@@ -514,13 +518,11 @@ void unpack_dpk(unsigned char *dpk,
 * Description:  Bit-pack sig.
 *
 * Arguments:   - poly *c: point to input c <- B\A6\C8
-*              - polyvecl * z: pointer to input {zi}ri=1
 *              - unsigned int r: r in {zi}ri=1
 *              - polyvecm* i: pointer to input i
 *              - unsigned char *sig: pointer to output array sig
 **************************************************/
 void pack_sig(poly *c,
-	polyvecl * z,
 	unsigned int r,
 	polyvecm* i,
 	unsigned char *sig)
@@ -533,16 +535,19 @@ void pack_sig(poly *c,
 	/* Encode z*/
 //        printf("encode z\n");
 
-	for (ii = 0; ii < r; ++ii)
-	{        
-		pack_z(&z[ii], sig + ii * PACK_Z_SIZE);
-	}
+//	for (ii = 0; ii < r; ++ii)
+//	{        
+//                for (j = 0; j < PACK_Z_SIZE; ++j)
+//                {
+//                         sig[ii * PACK_Z_SIZE + j] = z[ii][j];
+//                }
+//	}
 
 	sig += r * PACK_Z_SIZE;
 
 	/* Encode I*/
 //        printf("encode I\n");
-	pack_i(i, sig);
+	pack_polyvecm_q(i, sig);
 	sig += PACK_I_SIZE;
 	/* Encode c */
 	signs = 0;
@@ -572,13 +577,11 @@ void pack_sig(poly *c,
 *
 * Arguments:   - unsigned char *sig: pointer to input array sig
 *             - poly *c: point to output c <- B\A6\C8
-*              - polyvecl * z: pointer to output {zi}ri=1
 *              - unsigned int r: r in {zi}ri=1
 *              - polyvecm* i: pointer to output i
 **************************************************/
 int unpack_sig(unsigned char *sig,
 	poly *c,
-	polyvecl * z,
 	unsigned int r,
 	polyvecm* i)
 {
@@ -586,14 +589,17 @@ int unpack_sig(unsigned char *sig,
 	long long signs;
 	/* Decode z*/
 
-	for (ii = 0; ii < r; ++ii)
-	{        
-               unpack_z(sig + ii * PACK_Z_SIZE, &z[ii]);
-	}
+//	for (ii = 0; ii < r; ++ii)
+//	{        
+//               for (j = 0; j < PACK_Z_SIZE; ++j)
+//               {
+//                      z[ii][j] = sig[ii * PACK_Z_SIZE + j];
+//               }
+//	}
 	sig += r * PACK_Z_SIZE;
 
 	/* Decode I */
-	unpack_i(sig, i);
+	unpack_polyvecm_q(sig, i);
 	sig += PACK_I_SIZE;
 	/* Decode c */
 	for (ii = 0; ii < N; ++ii)

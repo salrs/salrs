@@ -381,7 +381,7 @@ void generate_L_eta(polyvecl *s)
 *             with coefficients belonging to[-GAMMA, GAMMA]
 * Arguments:   - polyvecl *s: pointer to output polynomial
 **************************************************/
-void generate_gamma(polyvecl *s)
+void generate_L_gamma(polyvecl *s)
 {
   unsigned int i;
   unsigned char seedbuf[GAMMASEEDSIZE];
@@ -398,7 +398,7 @@ void generate_gamma(polyvecl *s)
 *             with coefficients belonging to [-GAMMA+2*THETA*ETA, GAMMA-2*THETA*ETA]
 * Arguments:   - polyvecl *s: pointer to output polynomial
 **************************************************/
-void generate_gamma_sub_to_theta_eta(polyvecl *s)
+void generate_L_gamma_sub_to_theta_eta(polyvecl *s)
 {
   unsigned int i;
   unsigned char seedbuf[GMTESEEDSIZE];
@@ -421,7 +421,7 @@ void Hm(polyveck *t, polyvecl H[M])
 {
   unsigned int i, j;
   unsigned char seedpack[PACK_T_SIZE],seedbuf[HMSEEDSIZE];
-  pack_t(t,seedpack);
+  pack_polyveck_q(t,seedpack);
   shake256(seedbuf,HMSEEDSIZE,seedpack,PACK_T_SIZE);
   for (i = 0; i < M; ++i){
     for (j = 0; j < L; ++j){
@@ -473,11 +473,11 @@ void H_theta(unsigned char *m,
       inbuf[count++] = Ring[i][j];
     }
   }
-  pack_t(w, inbuf + count);
+  pack_polyveck_q(w, inbuf + count);
   count += PACK_T_SIZE;
-  pack_m(v, inbuf + count);
+  pack_polyvecm_q(v, inbuf + count);
   count += PACK_I_SIZE;
-  pack_m(I, inbuf + count);
+  pack_polyvecm_q(I, inbuf + count);
   count += PACK_I_SIZE;
 
   shake256_absorb(&state, inbuf, inbuf_len);
