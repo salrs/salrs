@@ -1546,7 +1546,7 @@ void poly_tomsg_kyber(unsigned char msg[KYBER_SYMBYTES], const poly_kyber *a)
 *              const poly *pk:            pointer to the input public-key polynomial
 *              const unsigned char *seed: pointer to the input public seed
 **************************************************/
-static void pack_pk_kyber(unsigned char *r, const polyvec_kyber *pk, const unsigned char *seed)
+void pack_pk_kyber(unsigned char *r, const polyvec_kyber *pk, const unsigned char *seed)
 {
 	int i;
 	polyvec_compress_kyber(r, pk);
@@ -1614,7 +1614,7 @@ static void unpack_ciphertext_kyber(polyvec_kyber *b, poly_kyber *v, const unsig
 * Arguments:   - unsigned char *r:  pointer to output serialized secret key
 *              - const polyvec *sk: pointer to input vector of polynomials (secret key)
 **************************************************/
-static void pack_sk_kyber(unsigned char *r, const polyvec_kyber *sk)
+void pack_sk_kyber(unsigned char *r, const polyvec_kyber *sk)
 {
 	polyvec_tobytes_kyber(r, sk);
 }
