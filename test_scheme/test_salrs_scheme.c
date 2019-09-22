@@ -1,12 +1,9 @@
 #include <stdio.h>
-#include <string.h>
 #include "../src/cpucycles.h"
 #include "speed.h"
 #include "../src/randombytes.h"
 #include "../src/params_salrs.h"
 #include "../src/salrs_main_scheme.h"
-#include "../src/kyber_all.h"
-#include "../src/polyvec_salrs.h"
 
 #define MLEN 59
 #define NTESTS 1000

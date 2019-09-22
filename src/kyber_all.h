@@ -10,7 +10,6 @@
 #define SHAKE256_RATE 136
 #define SHA3_256_RATE 136
 #define SHA3_512_RATE  72
-#define _GNU_SOURCE
 
 /*
 * Elements of R_q = Z_q[X]/(X^n + 1). Represents polynomial
@@ -96,6 +95,10 @@ int crypto_kem_enc_kyber(unsigned char *ct,
 int crypto_kem_dec_kyber(unsigned char *ss,
 	const unsigned char *ct,
 	const unsigned char *sk);
+
+// Move some static functions here.
+void pack_pk_kyber(unsigned char *r, const polyvec_kyber *pk, const unsigned char *seed);
+void pack_sk_kyber(unsigned char *r, const polyvec_kyber *sk);
 
 
 #endif // !KYBER_ALL.H
